@@ -21,9 +21,21 @@
     <ClCompile Include="hh_hid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hh_bluetooth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hh_devnode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hh_hid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hh_bluetooth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hh_devnode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

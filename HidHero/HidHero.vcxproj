@@ -20,9 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="hh.cpp" />
+    <ClCompile Include="hh_bluetooth.cpp" />
+    <ClCompile Include="hh_devnode.cpp" />
     <ClCompile Include="hh_hid.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="hh_bluetooth.h" />
+    <ClInclude Include="hh_devnode.h" />
     <ClInclude Include="hh_hid.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

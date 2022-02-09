@@ -1,4 +1,5 @@
 #include "hh_hid.h"
+#include "hh_devnode.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,54 +40,10 @@ namespace hh
 		GUID guid;
 		HidD_GetHidGuid(&guid);
 
-		CONFIGRET status = CR_SUCCESS;
-		PWSTR deviceInterfaceList = NULL;
-		ULONG deviceInterfaceListLength = 0;
-		PWSTR currentInterface;
-		HANDLE deviceHandle = INVALID_HANDLE_VALUE;
-		WCHAR stringBuf[128];
 		std::vector<HidDevice> devices;
-
-		status = CM_Get_Device_Interface_List_Size(&deviceInterfaceListLength, &guid, NULL, CM_GET_DEVICE_INTERFACE_LIST_PRESENT);
-		if (status != CR_SUCCESS)
+		for (auto& handle : list_devices(&guid))
 		{
-			goto ret;
-		}
-
-		if (deviceInterfaceListLength <= 1)
-		{
-			goto ret;
-		}
-
-		deviceInterfaceList = (PWSTR)malloc(deviceInterfaceListLength * sizeof(WCHAR));
-		if (deviceInterfaceList == NULL)
-		{
-			goto ret;
-		}
-
-		ZeroMemory(deviceInterfaceList, deviceInterfaceListLength * sizeof(WCHAR));
-
-		status = CM_Get_Device_Interface_List(&guid, NULL, deviceInterfaceList, deviceInterfaceListLength, CM_GET_DEVICE_INTERFACE_LIST_PRESENT);
-		if (status != CR_SUCCESS)
-		{
-			goto ret;
-		}
-
-		for (currentInterface = deviceInterfaceList; *currentInterface; currentInterface += wcslen(currentInterface) + 1)
-		{
-			deviceHandle = CreateFile(currentInterface, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
-			if (deviceHandle == INVALID_HANDLE_VALUE)
-			{
-				continue;
-			}
-
-			devices.push_back(HidDevice(deviceHandle));
-		}
-
-	ret:
-		if (deviceInterfaceList)
-		{
-			free(deviceInterfaceList);
+			devices.push_back(HidDevice(handle));
 		}
 
 		return devices;
