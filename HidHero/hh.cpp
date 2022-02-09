@@ -32,5 +32,6 @@ static void list_hid()
 int main()
 {
     list_hid();
+    std::cin.get();
     return 0;
 }
